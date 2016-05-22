@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/background1.jpg</file>
+        <file>images/background2.jpg</file>
+        <file>images/background3.jpg</file>
+        <file>images/background4.jpg</file>
+        <file>images/background5.jpg</file>
+        <file>images/bubble.png</file>
+    </qresource>
+</RCC>
