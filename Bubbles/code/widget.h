@@ -31,6 +31,8 @@ public:
     static const int backgroundsNum = 5;
     static const int randSpeed = 5;
 
+    int clickX, clickY, moveX, moveY, releaseX, releaseY;
+
     int maxRandSize;
 
     int currentBackgroundNum;
@@ -56,6 +58,9 @@ private slots:
     void keyReleaseEvent(QKeyEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void upBackground();
+    void downBackground();
 
 private:
     Ui::Widget *ui;

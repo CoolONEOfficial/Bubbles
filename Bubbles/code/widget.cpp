@@ -66,7 +66,7 @@ void Widget::paintEvent(QPaintEvent *)
 
     p.drawText(QRect(p.font().pixelSize()*0.2, height()-p.font().pixelSize()*1.2, width(), p.font().pixelSize()*2), Qt::AlignLeft, "CoolONE.ru");
 
-    p.drawText(QRect(0, 0, width(), p.font().pixelSize()), Qt::AlignRight, "Bubbles v0.2.3");
+    p.drawText(QRect(0, 0, width()-15, p.font().pixelSize()*2), Qt::AlignRight, "Bubbles v0.3");
 
     for(int f = 0; f<bubbles.size(); f++)
     {
@@ -225,38 +225,76 @@ void Widget::keyReleaseEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_PageUp)
     {
-        if(currentBackgroundNum+1 < backgroundsNum)
-        {
-            currentBackgroundNum++;
-        }
-        else
-        {
-            currentBackgroundNum = 0;
-        }
-        update();
+        upBackground();
     }
     else if(event->key() == Qt::Key_PageDown)
     {
-        if(currentBackgroundNum>0)
-        {
-            currentBackgroundNum--;
-        }
-        else
-        {
-            currentBackgroundNum = backgroundsNum-1;
-        }
-        update();
+        downBackground();
     }
 }
 
 void Widget::mouseMoveEvent(QMouseEvent *event)
 {
-    createBubble(event->x(), event->y());
+    moveX = event->x();
+    moveY = event->y();
+
+    createBubble(moveX, moveY);
 }
 
 void Widget::mouseReleaseEvent(QMouseEvent *event)
 {
+    releaseX = event->x();
+    releaseY = event->y();
+
     if(event->x()<siteFont.pixelSize()*5 &&
             event->y()>height()-siteFont.pixelSize()*1)
-    QDesktopServices::openUrl(QUrl("http://coolone.ru/"));
+    {
+        // Open Site
+        QDesktopServices::openUrl(QUrl("http://coolone.ru/"));
+    }
+
+    if(releaseX == clickX)
+    {
+        if(releaseX > width()/2)
+        {
+            upBackground();
+        }
+        else
+        {
+            downBackground();
+        }
+    }
+}
+
+void Widget::mousePressEvent(QMouseEvent *event)
+{
+    clickX = event->x();
+    clickY = event->y();
+}
+
+void Widget::upBackground()
+{
+    // Up
+    if(currentBackgroundNum+1 < backgroundsNum)
+    {
+        currentBackgroundNum++;
+    }
+    else
+    {
+        currentBackgroundNum = 0;
+    }
+    update();
+}
+
+void Widget::downBackground()
+{
+    if(currentBackgroundNum>0)
+    {
+        currentBackgroundNum--;
+    }
+    else
+    {
+        currentBackgroundNum = backgroundsNum-1;
+    }
+    update();
 }
